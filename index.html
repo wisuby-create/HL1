@@ -1,113 +1,413 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-<title>Heartline — Demo Fixed</title>
+<meta charset="utf-8">
+<title>Heartline — demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>
   :root{
-    --bg1:#ffeef7; --bg2:#e6f0ff; --ink:#111827; --muted:#6b7280;
-    --glass:rgba(255,255,255,.65); --shadow:0 10px 30px rgba(0,0,0,.25);
-    --blue:#60a5fa; --vio:#8b5cf6; --green:#34d399; --pink:#f472b6;
+    --ink:#111827; --muted:#6b7280;
+    --shell:#0b1220; --glass:rgba(255,255,255,.65);
+    --pink:#f472b6; --vio:#8b5cf6; --blue:#60a5fa; --green:#34d399;
+    --shadow:0 14px 40px rgba(0,0,0,.25);
   }
-  *{box-sizing:border-box} html,body,#root{height:100%;margin:0}
-  body{background:#0f172a;overflow:hidden;font-family:Inter,ui-sans-serif,-apple-system,Segoe UI,Roboto;color:var(--ink)}
-  .stage{height:100%;display:flex;align-items:center;justify-content:center}
-  .phone{width:min(360px,calc(100vw - 16px));height:min(780px,calc(100vh - 16px));
-    border-radius:28px;background:#000;border:4px solid #0b0f1a;
-    box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
-  .appbar{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#0b1220;color:#fff}
-  .appbar b{font-weight:700}
-  .btn-top{background:#182034;border:0;color:#e5e7eb;border-radius:10px;padding:6px 10px;font-size:12px;cursor:pointer}
-  .screen{position:relative;flex:1;overflow:hidden;background:linear-gradient(135deg,var(--bg1),var(--bg2))}
-  .screen::before{content:"";position:absolute;inset:0;opacity:.22;background-image:url('data:image/svg+xml;utf8,\
-<svg xmlns="http://www.w3.org/2000/svg" width="700" height="700">\
-<defs><radialGradient id="g" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#ffffff00"/></radialGradient></defs>\
-<g opacity="0.95">\
-<circle cx="120" cy="120" r="54" fill="%23f8b4d9"/><circle cx="120" cy="120" r="28" fill="url(%23g)"/>\
-<circle cx="560" cy="140" r="46" fill="%23c4b5fd"/><circle cx="560" cy="140" r="24" fill="url(%23g)"/>\
-<circle cx="210" cy="320" r="42" fill="%23a7f3d0"/><circle cx="210" cy="320" r="22" fill="url(%23g)"/>\
-<circle cx="430" cy="380" r="58" fill="%23fde68a"/><circle cx="430" cy="380" r="30" fill="url(%23g)"/>\
-<circle cx="300" cy="560" r="44" fill="%23fbcfe8"/><circle cx="300" cy="560" r="22" fill="url(%23g)"/>\
-</g></svg>');background-size:280px 280px;background-repeat:repeat}
-  .start-wrap{height:100%;display:grid;place-items:center;padding:18px}
-  .card{background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border-radius:22px;box-shadow:var(--shadow);padding:22px;text-align:center;width:min(320px,90%)}
-  .title{font-size:28px;font-weight:800;letter-spacing:.5px;margin-bottom:10px}
-  .btn-primary{background:linear-gradient(135deg,#fb7185,#f472b6);color:#fff;border:0;border-radius:14px;padding:12px 16px;font-weight:700;cursor:pointer;width:100%;margin-top:10px}
-  .btn-ghost{background:transparent;border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:10px 12px;cursor:pointer;width:100%;margin-top:8px}
-  .name-box input{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(0,0,0,.12);font-size:16px}
-  .home{position:relative;z-index:1;padding:18px;height:100%;display:flex;flex-direction:column}
-  .welcome{margin:4px 0 12px 4px;color:#1f2937;font-weight:700}
-  .grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start;justify-items:center}
-  .app{position:relative;display:flex;flex-direction:column;align-items:center}
-  .app-icon{width:68px;height:68px;border-radius:999px;background:var(--glass);backdrop-filter:blur(6px);display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.12);font-size:26px}
-  .app-name{margin-top:6px;font-size:12px;font-weight:600;color:#1f2937}
-  .badge{position:absolute;right:-6px;top:-6px;background:#ef4444;color:#fff;border-radius:999px;min-width:18px;height:18px;display:grid;place-items:center;font-size:11px;padding:0 6px;border:2px solid #fff}
-  .home-hint{text-align:center;font-size:12px;color:#374151}
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,-apple-system,Segoe UI,Roboto}
+  body{background:#0f172a;color:var(--ink);display:grid;place-items:center}
+
+  /* PHONE */
+  .phone{width:min(380px,calc(100vw - 16px));height:min(800px,calc(100vh - 16px));
+    background:#000;border:4px solid #0b0f1a;border-radius:28px;overflow:hidden;
+    box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .status{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:var(--shell);color:#fff}
+  .screen{position:relative;flex:1;overflow:hidden;background:linear-gradient(135deg,#ffeef7,#d8efff)}
+  .screen::before{content:"";position:absolute;inset:0;opacity:.18;
+    /* TODO: wstaw swoją zblurowaną sakurę jako tło (np. url('assets/sakura-closeup.jpg')) */
+    background-image:radial-gradient(closest-side, #fff, #0000 70%), radial-gradient(closest-side, #fff, #0000 70%);
+    background-position:120px 140px, 260px 420px; background-size:260px 260px, 200px 200px}
+
+  /* common */
+  .hidden{display:none !important}
+  .wrap{position:relative;z-index:1;height:100%;display:flex;flex-direction:column}
+  .pad{padding:16px}
+
+  /* START */
+  .start{height:100%;display:flex;flex-direction:column;gap:16px;align-items:center;justify-content:flex-start}
+  .logo{margin:16px 0 6px;font-size:32px;font-weight:800;letter-spacing:.3px;color:#fff}
+  .card{width:92%;border-radius:24px;overflow:hidden;background:rgba(255,255,255,.9);box-shadow:0 10px 30px rgba(0,0,0,.15)}
+  .poster{width:100%;height:260px;background:
+      linear-gradient(180deg, rgba(255,255,255,.0), rgba(255,255,255,.25)),
+      url(""); background-size:cover;background-position:center}
+      /* TODO: wstaw okładkę startową: background-image: url('assets/start-cover.jpg'); */
+  .cardBody{padding:16px;text-align:center}
+  .btn{appearance:none;border:0;border-radius:16px;padding:12px 16px;font-weight:700;cursor:pointer}
+  .btnPrimary{background:linear-gradient(135deg,var(--pink),var(--vio));color:#fff}
+  .btnGhost{background:#fff}
+  .row{display:flex;gap:10px;justify-content:center}
+
+  /* MODAL NAME */
+  .modal{position:absolute;inset:0;background:rgba(0,0,0,.35);display:grid;place-items:center}
+  .dialog{width:90%;background:#fff;border-radius:18px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  .dialog h3{margin:0 0 10px}
+  .input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #e5e7eb;font-size:16px}
+  .right{display:flex;justify-content:flex-end;margin-top:12px}
+
+  /* HOME */
+  .home{gap:14px}
+  .title{font-weight:800;text-align:center;margin-top:6px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;justify-items:center}
+  .app{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .appIcon{width:76px;height:76px;border-radius:999px;background:var(--glass);backdrop-filter:blur(8px);display:grid;place-items:center;
+    font-size:28px;box-shadow:0 6px 22px rgba(0,0,0,.12)}
+  .badge{position:absolute;margin-left:52px;margin-top:-6px;background:#ef4444;color:#fff;border-radius:999px;min-width:18px;height:18px;display:grid;place-items:center;font-size:11px;border:2px solid #fff;padding:0 6px}
+  .hint{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
+
+  /* LISTA WIAD. */
+  .topbar{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.7);backdrop-filter:blur(6px);padding:10px 12px}
+  .link{background:transparent;border:0;font-weight:700;cursor:pointer}
+  .list{padding:12px;display:flex;flex-direction:column;gap:10px;height:calc(100% - 50px);overflow:auto}
+  .contact{display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.86);border-radius:14px;padding:10px 12px;position:relative}
+  .avatar{width:42px;height:42px;border-radius:999px;display:grid;place-items:center;color:#fff;font-weight:800}
+  .i-maja{background:var(--pink)} .i-riven{background:var(--blue)} .i-noah{background:var(--green)} .i-victor{background:var(--vio)}
+  .name{font-weight:800}.last{font-size:12px;color:var(--muted)}
+  .pushnote{position:absolute;left:16px;right:16px;bottom:16px;padding:10px 12px;border-radius:14px;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.16);display:flex;gap:10px;align-items:center}
+
+  /* CHAT */
+  .chat{height:calc(100% - 50px);display:flex;flex-direction:column}
+  .thread{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
+  .rowmsg{display:flex;gap:8px;align-items:flex-end}
+  .bubble{max-width:74%;padding:9px 11px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.08);border:1px solid #00000010;background:#fff}
+  .fromMe{margin-left:auto;background:linear-gradient(135deg,var(--blue),var(--vio));color:#fff;border-top-right-radius:6px;border-color:#0000}
+  .fromThem{border-top-left-radius:6px}
+  .bar{padding:10px 12px;background:rgba(255,255,255,.85);border-top:1px solid #00000012}
+  .choices{display:grid;gap:8px}
+  .choice{padding:10px 12px;border-radius:14px;background:linear-gradient(135deg,#fff,#f5f7ff);border:1px solid #e5e7eb;text-align:left}
+  .next{width:100%}
 </style>
 </head>
 <body>
-<div id="root"></div>
-
-<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-<script type="text/babel">
-const {useState,useEffect}=React;
-
-function App(){
-  const [screen,setScreen]=useState('start');
-  const [name,setName]=useState('');
-
-  return(
-    <div className="stage">
-      <div className="phone">
-        <div className="appbar"><button className="btn-top" onClick={()=>setScreen('start')}>Reset</button><b>Heartline</b><div style={{width:'60px'}}/></div>
-        {screen==='start'&&(
-          <div className="screen">
-            <div className="start-wrap">
-              <div className="card">
-                <div className="title">Heartline</div>
-                <div style={{fontSize:13,color:'#374151',marginBottom:10}}>Romance Messenger • Demo</div>
-                <button className="btn-primary" onClick={()=>setScreen('name')}>Start</button>
-              </div>
-            </div>
+<div class="phone" id="app">
+  <div class="status"><div id="t">--:--</div><div>Heartline</div><div>🔋92%</div></div>
+  <div class="screen">
+    <!-- START -->
+    <div class="wrap start" id="scrStart">
+      <div class="logo">Heartline</div>
+      <div class="card">
+        <div class="poster" id="startPoster"></div>
+        <div class="cardBody">
+          <div style="margin-bottom:10px;color:#374151">Tap to begin your story</div>
+          <div class="row">
+            <button class="btn btnPrimary" id="btnStart">Start</button>
+            <button class="btn btnGhost" id="btnReset">Reset</button>
           </div>
-        )}
-        {screen==='name'&&(
-          <div className="screen">
-            <div className="start-wrap">
-              <div className="card name-box">
-                <div className="title" style={{fontSize:22}}>Welcome!</div>
-                <div style={{fontSize:13,color:'#374151',margin:'8px 0 10px'}}>Enter your name:</div>
-                <input placeholder="Your name" value={name} onChange={e=>setName(e.target.value)}/>
-                <button className="btn-primary" onClick={()=>setScreen('home')}>OK</button>
-              </div>
-            </div>
-          </div>
-        )}
-        {screen==='home'&&(
-          <div className="screen">
-            <div className="home">
-              <div className="welcome">Welcome, {name||'Player'} 💖</div>
-              <div className="grid">
-                {['💬','📞','🖼️','⏰','⚙️','📝','🎵','📅','✉️'].map((i,n)=>(
-                  <div className="app" key={n}>
-                    <div className="app-icon">{i}</div>
-                  </div>
-                ))}
-              </div>
-              <div className="home-hint">Tap “Messages” to open chats</div>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </div>
-  );
+
+    <!-- NAME MODAL -->
+    <div class="modal hidden" id="nameModal">
+      <div class="dialog">
+        <h3>Enter your name</h3>
+        <input id="nameInput" class="input" placeholder="Your name"/>
+        <div class="right"><button class="btn btnPrimary" id="btnOk">OK</button></div>
+      </div>
+    </div>
+
+    <!-- HOME (PHONE) -->
+    <div class="wrap pad home hidden" id="scrHome">
+      <div class="title" id="hello"></div>
+      <div class="grid" id="apps"></div>
+      <div class="hint">A new message will arrive shortly…</div>
+      <div class="pushnote hidden" id="push">
+        <div class="avatar i-maja" style="width:30px;height:30px">M</div>
+        <div><div style="font-weight:700">New message</div><div class="last">from Maya 💬</div></div>
+      </div>
+    </div>
+
+    <!-- MESSAGES LIST -->
+    <div class="wrap hidden" id="scrList">
+      <div class="topbar">
+        <button class="link" id="backHome">◀ Back</button>
+        <div style="font-weight:800">Messages</div>
+        <div style="width:24px"></div>
+      </div>
+      <div class="list" id="list"></div>
+    </div>
+
+    <!-- CHAT -->
+    <div class="wrap hidden" id="scrChat">
+      <div class="topbar">
+        <button class="link" id="backList">◀ Back</button>
+        <div id="chatTitle" style="font-weight:800"></div>
+        <div id="chatAvatar" class="avatar i-maja">M</div>
+      </div>
+      <div class="chat">
+        <div class="thread" id="thread"></div>
+        <div class="bar" id="barNext"><button class="btn btnPrimary next" id="btnNext">Next ▶</button></div>
+        <div class="bar hidden" id="barChoices"><div class="choices" id="choices"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* --------- tiny utils --------- */
+const $ = sel => document.querySelector(sel);
+const el = (tag, cls, txt) => {const n=document.createElement(tag); if(cls) n.className=cls; if(txt) n.textContent=txt; return n;};
+const show = id => {["#scrStart","#scrHome","#scrList","#scrChat"].forEach(s=>$(s).classList.add('hidden')); $(id).classList.remove('hidden');};
+const nowTime = ()=>{const d=new Date(); return d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});}
+setInterval(()=>$("#t").textContent=nowTime(),1000);
+
+/* --------- STATE --------- */
+const ST = {
+  name: null,
+  unlocked: { maya:true, riven:false },
+  badges: { maya:0, riven:0 },
+  threads: {
+    maya: { msgs:[], queue:[], stage:'idle', finished:false },
+    riven:{ msgs:[], queue:[], stage:'idle', finished:false },
+  }
+};
+
+/* --------- SCRIPTS (prosto) --------- */
+const Script = {
+  maya:{
+    start:{ from:'Maya', text:'Hey! Guess who texted me just now? 👀' },
+    choices:[
+      {id:'m1', text:"Tell me already!"},
+      {id:'m2', text:"Let me guess… Riven?"},
+      {id:'m3', text:"You’re glowing, Maya 😉"}
+    ],
+    replies:{
+      m1:[{from:'Maya',text:'Riven. He texted ME instead of you.'},
+          {from:'Maya',text:"What is he even doing? 😤"}],
+      m2:[{from:'Maya',text:'…Yeah. Sorry 😅'},
+          {from:'Maya',text:"He asked if you’re still mad."}],
+      m3:[{from:'Maya',text:'Haha stop 🙈 But yes… Riven.'}]
+    },
+    onFinish(){
+      ST.unlocked.riven=true;
+      ST.badges.riven=(ST.badges.riven||0)+1;
+      notifyHome('riven');
+    }
+  },
+  riven:{
+    start:{ from:'Riven', text:'You still awake?' },
+    choices:[
+      {id:'r1', text:"Didn’t expect to hear from you."},
+      {id:'r2', text:"I don’t sleep much lately."},
+      {id:'r3', text:"(Don’t reply)"}
+    ],
+    replies:{
+      r1:[{from:'Riven',text:"Me neither. Guess we’re bad at letting go."},
+          {from:'Riven',text:'Maya said you’re still in town.'}],
+      r2:[{from:'Riven',text:'Figures. You used to text me at 2AM just to send memes.'}],
+      r3:[{from:'Riven',text:'…Yeah. I probably deserve the silence.'}]
+    },
+    follow:[
+      {from:'Riven',text:'Do you ever think about… that night?'}
+    ],
+    onFinish(){
+      // ping back to Maya / allow reply
+      ST.badges.maya=(ST.badges.maya||0)+1;
+      notifyHome('maya',"Maya: “Call me later?”");
+    }
+  }
+};
+
+/* --------- START / RESET --------- */
+$("#btnStart").onclick = ()=> { $("#nameModal").classList.remove('hidden'); $("#nameInput").focus(); };
+$("#btnReset").onclick = ()=> { localStorage.removeItem('HL_SAVE'); location.reload(); };
+$("#btnOk").onclick = ()=>{
+  const v = $("#nameInput").value.trim() || "You";
+  ST.name = v; save();
+  $("#hello").textContent = `Welcome, ${v}!`;
+  $("#nameModal").classList.add('hidden');
+  show("#scrHome");
+  armHome();
+};
+function save(){ localStorage.setItem('HL_SAVE', JSON.stringify(ST)); }
+function load(){
+  const raw=localStorage.getItem('HL_SAVE');
+  if(!raw) return;
+  try{
+    const s = JSON.parse(raw);
+    Object.assign(ST, s);
+  }catch(e){}
 }
-const root=ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App/>);
+load();
+if(ST.name){ $("#hello").textContent=`Welcome, ${ST.name}!`; show("#scrHome"); armHome(true); }
+
+/* --------- HOME (apps + auto notify) --------- */
+function appIcon(emoji, label, onClick, badge=0){
+  const wrap = el('div','app');
+  const ico = el('div','appIcon',emoji);
+  wrap.appendChild(ico);
+  wrap.appendChild(el('div',null,label));
+  if(badge>0){ const b=el('div','badge',badge); wrap.style.position='relative'; wrap.appendChild(b); }
+  if(onClick) wrap.onclick=onClick;
+  return wrap;
+}
+function armHome(skipNotify=false){
+  const g = $("#apps"); g.innerHTML="";
+  g.append(
+    appIcon("💬","Messages", ()=>{ show("#scrList"); renderList(); }, (ST.badges.maya||0)+(ST.badges.riven||0)),
+    appIcon("📞","Phone"),
+    appIcon("🖼️","Gallery"),
+    appIcon("⏰","Clock"),
+    appIcon("📝","Notes"),
+    appIcon("⚙️","Settings"),
+    appIcon("🎵","Music"),
+    appIcon("📅","Calendar"),
+    appIcon("✉️","Mail"),
+  );
+  if(!skipNotify){
+    setTimeout(()=>{ ST.badges.maya=(ST.badges.maya||0)+1; save(); notifyHome('maya'); },1500);
+  }
+}
+function notifyHome(who, previewText){
+  const n=$("#push");
+  const isM = who==='maya';
+  n.querySelector('.avatar').className = 'avatar ' + (isM?'i-maja':'i-riven');
+  n.querySelector('.last').textContent = previewText || (isM?'from Maya 💬':'from Riven 💬');
+  n.classList.remove('hidden');
+  setTimeout(()=>n.classList.add('hidden'), 2200);
+  save();
+}
+
+/* --------- MESSAGES LIST --------- */
+$("#backHome").onclick = ()=>{ show("#scrHome"); armHome(true); };
+
+function renderList(){
+  const L=$("#list"); L.innerHTML="";
+  const contacts=[
+    {id:'maya',  name:'Maya',   cls:'i-maja',  initial:'M'},
+    {id:'riven', name:'Riven',  cls:'i-riven', initial:'R'},
+    // przyszli chłopcy: {id:'noah',...}, {id:'victor',...}
+  ];
+  contacts.forEach(c=>{
+    if(!ST.unlocked[c.id]) return; // ukryj zablokowane
+    const row = el('button','contact');
+    const av = el('div','avatar '+c.cls,c.initial);
+    const box = el('div');
+    const nm  = el('div','name',c.name);
+    const last= lastPreview(c.id);
+    box.append(nm, el('div','last', last || (c.id==='maya'?'“Hey! Guess who texted me…?”':'“You still awake?”')));
+    row.append(av,box);
+    if(ST.badges[c.id]>0){ const b=el('div','badge', ST.badges[c.id]); b.style.position='absolute'; b.style.right='8px'; b.style.top='8px'; row.appendChild(b); }
+    row.onclick = ()=> openChat(c.id,c.name,c.cls);
+    L.appendChild(row);
+  });
+}
+function lastPreview(id){ const th=ST.threads[id]; const m=th.msgs; if(!m.length) return ""; return m[m.length-1].text; }
+
+/* --------- CHAT --------- */
+$("#backList").onclick = ()=>{ show("#scrList"); renderList(); };
+$("#btnNext").onclick = ()=> stepNext();
+
+let CUR = { id:null, title:"", cls:"" };
+
+function openChat(id,title,cls){
+  CUR={id,title,cls};
+  $("#chatTitle").textContent=title;
+  $("#chatAvatar").className = "avatar "+cls;
+  show("#scrChat");
+  // clear unread
+  ST.badges[id]=0; save();
+
+  // ensure start
+  const T = ST.threads[id];
+  if(T.msgs.length===0 && T.queue.length===0 && !T.finished){
+    const s = Script[id].start;
+    T.queue.push({from:s.from,text:s.text,me:false});
+    T.stage='start';
+  }
+  renderThread();
+  updateBars();
+}
+
+/* render + bars */
+function renderThread(){
+  const box=$("#thread"); box.innerHTML="";
+  const T=ST.threads[CUR.id];
+  T.msgs.forEach(m=>{
+    const row=el('div','rowmsg');
+    if(!m.me){ row.appendChild(el('div','avatar '+ (CUR.cls||'i-maja'), (m.from||'?')[0])); }
+    const b=el('div','bubble '+(m.me?'fromMe':'fromThem'));
+    b.innerHTML = m.me ? m.text : `<strong>${m.from}</strong><br>${m.text}`;
+    m.me? row.appendChild(b) : (row.append(b));
+    if(m.me){ row.classList.add('righted'); }
+    $("#thread").appendChild(row);
+  });
+  box.scrollTop = box.scrollHeight;
+}
+function updateBars(){
+  const T=ST.threads[CUR.id];
+  const haveQueue = T.queue.length>0;
+  const haveChoices = (T.choices||[]).length>0;
+  $("#barNext").classList.toggle('hidden', !haveQueue);
+  $("#barChoices").classList.toggle('hidden', !haveChoices);
+  if(haveChoices){
+    const wrap=$("#choices"); wrap.innerHTML="";
+    T.choices.forEach(ch=>{
+      const btn=el('button','choice',ch.text);
+      btn.onclick = ()=> choose(ch.id);
+      wrap.appendChild(btn);
+    });
+  }
+}
+
+/* advancing */
+function stepNext(){
+  const T=ST.threads[CUR.id];
+  if(!T.queue.length) return;
+  const msg = T.queue.shift();
+  T.msgs.push(msg);
+  // when first burst finished → show choices
+  if(T.queue.length===0 && T.stage==='start' && Script[CUR.id].choices){
+    T.choices = [...Script[CUR.id].choices];
+    T.stage='await';
+  }
+  // special: riven follow line
+  if(T.queue.length===0 && T.stage==='afterChoices' && Script[CUR.id].follow){
+    T.queue.push(...Script[CUR.id].follow);
+    T.stage='followShown';
+  }
+  save(); renderThread(); updateBars();
+
+  // auto-finish hook
+  if(T.queue.length===0 && !T.choices?.length && (T.stage==='followShown' || T.stage==='afterChoicesDone')){
+    T.finished=true; save();
+    if(Script[CUR.id].onFinish) Script[CUR.id].onFinish();
+  }
+}
+
+function choose(choiceId){
+  const T=ST.threads[CUR.id];
+  const sc=Script[CUR.id];
+  // append our choice bubble
+  const txt = (sc.choices.find(c=>c.id===choiceId)||{}).text || "...";
+  T.msgs.push({from:'You',text:txt,me:true});
+  // schedule replies
+  const bundle = (sc.replies[choiceId]||[]);
+  T.queue.push(...bundle);
+  T.choices = [];
+  T.stage = (CUR.id==='riven') ? 'afterChoices' : 'afterChoicesDone';
+  save(); renderThread(); updateBars();
+
+  // for Maya: zakończenie od razu po wypisaniu queue
+  // (obsłuży stepNext, gdy dojdzie do końca)
+}
+
+/* --------- FIRST LOAD FLOW --------- */
+if(!ST.name){
+  show("#scrStart");
+}else{
+  show("#scrHome");
+}
+
+/* --------- ACCESSIBILITY: enter on modal --------- */
+$("#nameInput").addEventListener('keydown', e=>{ if(e.key==='Enter') $("#btnOk").click(); });
 </script>
 </body>
 </html>
