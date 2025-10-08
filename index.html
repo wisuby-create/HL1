@@ -10,70 +10,79 @@
     --shell:#0b1220; --glass:rgba(255,255,255,.65);
     --pink:#f472b6; --vio:#8b5cf6; --blue:#60a5fa; --green:#34d399;
     --shadow:0 14px 40px rgba(0,0,0,.25);
+    /* TODO: podmień na swoją tapetę: */
+    --wallpaper: url("");
   }
   *{box-sizing:border-box}
   html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,-apple-system,Segoe UI,Roboto}
   body{background:#0f172a;color:var(--ink);display:grid;place-items:center}
 
-  /* PHONE */
+  /* PHONE SHELL */
   .phone{width:min(380px,calc(100vw - 16px));height:min(800px,calc(100vh - 16px));
     background:#000;border:4px solid #0b0f1a;border-radius:28px;overflow:hidden;
     box-shadow:var(--shadow);display:flex;flex-direction:column}
   .status{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:var(--shell);color:#fff}
-  .screen{position:relative;flex:1;overflow:hidden;background:linear-gradient(135deg,#ffeef7,#d8efff)}
-  .screen::before{content:"";position:absolute;inset:0;opacity:.18;
-    /* TODO: wstaw swoją zblurowaną sakurę jako tło (np. url('assets/sakura-closeup.jpg')) */
-    background-image:radial-gradient(closest-side, #fff, #0000 70%), radial-gradient(closest-side, #fff, #0000 70%);
-    background-position:120px 140px, 260px 420px; background-size:260px 260px, 200px 200px}
+  .screen{position:relative;flex:1;overflow:hidden}
+  .hidden{display:none!important}
 
-  /* common */
-  .hidden{display:none !important}
+  /* START SCREEN (GAME) */
   .wrap{position:relative;z-index:1;height:100%;display:flex;flex-direction:column}
-  .pad{padding:16px}
-
-  /* START */
-  .start{height:100%;display:flex;flex-direction:column;gap:16px;align-items:center;justify-content:flex-start}
-  .logo{margin:16px 0 6px;font-size:32px;font-weight:800;letter-spacing:.3px;color:#fff}
+  .start{height:100%;display:flex;flex-direction:column;gap:16px;align-items:center;justify-content:flex-start;
+    background:linear-gradient(135deg,#ffeef7,#d8efff)}
+  .logo{margin:16px 0 6px;font-size:32px;font-weight:800;letter-spacing:.3px;color:#fff;text-shadow:0 2px 8px #0004}
   .card{width:92%;border-radius:24px;overflow:hidden;background:rgba(255,255,255,.9);box-shadow:0 10px 30px rgba(0,0,0,.15)}
   .poster{width:100%;height:260px;background:
       linear-gradient(180deg, rgba(255,255,255,.0), rgba(255,255,255,.25)),
-      url(""); background-size:cover;background-position:center}
-      /* TODO: wstaw okładkę startową: background-image: url('assets/start-cover.jpg'); */
+      var(--poster); background-size:cover;background-position:center}
+  /* TODO: ustaw obraz okładki: w JS niżej var(--poster) dostaje url('assets/start-cover.jpg') */
   .cardBody{padding:16px;text-align:center}
   .btn{appearance:none;border:0;border-radius:16px;padding:12px 16px;font-weight:700;cursor:pointer}
   .btnPrimary{background:linear-gradient(135deg,var(--pink),var(--vio));color:#fff}
   .btnGhost{background:#fff}
   .row{display:flex;gap:10px;justify-content:center}
 
-  /* MODAL NAME */
+  /* NAME MODAL */
   .modal{position:absolute;inset:0;background:rgba(0,0,0,.35);display:grid;place-items:center}
   .dialog{width:90%;background:#fff;border-radius:18px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
   .dialog h3{margin:0 0 10px}
   .input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #e5e7eb;font-size:16px}
   .right{display:flex;justify-content:flex-end;margin-top:12px}
 
-  /* HOME */
-  .home{gap:14px}
+  /* PHONE LOCK/HOME */
+  .wall{position:absolute;inset:0;background:
+    radial-gradient(120% 120% at 50% 10%, #00000055, #0000 60%),
+    var(--wallpaper); background-size:cover;background-position:center;
+    filter:blur(0) brightness(1); }
+  .wall::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#00000020,#00000020)}
+  .lock{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:18px}
+  .lockClock{margin-top:34px;text-align:center;color:#fff;text-shadow:0 2px 12px #0007}
+  .clockTime{font-size:64px;font-weight:800;letter-spacing:.5px;line-height:1}
+  .clockDate{margin-top:6px;font-weight:600;opacity:.9}
+  .dock{display:flex;gap:16px;justify-content:center;margin-bottom:6px}
+  .dockBtn{width:76px;height:76px;border-radius:24px;background:rgba(255,255,255,.2);backdrop-filter:blur(8px);
+    display:grid;place-items:center;font-size:28px;color:#fff;box-shadow:0 8px 20px #0006;border:1px solid #ffffff30;position:relative}
+  .badge{position:absolute;right:-6px;top:-6px;background:#ef4444;color:#fff;border-radius:999px;min-width:18px;height:18px;display:grid;place-items:center;font-size:11px;border:2px solid #fff;padding:0 6px}
+
+  /* HOME GRID (DRAWER) */
+  .home{gap:14px;background:linear-gradient(135deg,#ffeef7,#d8efff)}
   .title{font-weight:800;text-align:center;margin-top:6px}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;justify-items:center}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;justify-items:center;padding:16px}
   .app{display:flex;flex-direction:column;align-items:center;gap:8px}
   .appIcon{width:76px;height:76px;border-radius:999px;background:var(--glass);backdrop-filter:blur(8px);display:grid;place-items:center;
-    font-size:28px;box-shadow:0 6px 22px rgba(0,0,0,.12)}
-  .badge{position:absolute;margin-left:52px;margin-top:-6px;background:#ef4444;color:#fff;border-radius:999px;min-width:18px;height:18px;display:grid;place-items:center;font-size:11px;border:2px solid #fff;padding:0 6px}
-  .hint{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
+    font-size:28px;box-shadow:0 6px 22px rgba(0,0,0,.12);position:relative}
+  .hint{font-size:12px;color:var(--muted);text-align:center;margin-bottom:10px}
 
   /* LISTA WIAD. */
   .topbar{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.7);backdrop-filter:blur(6px);padding:10px 12px}
   .link{background:transparent;border:0;font-weight:700;cursor:pointer}
-  .list{padding:12px;display:flex;flex-direction:column;gap:10px;height:calc(100% - 50px);overflow:auto}
-  .contact{display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.86);border-radius:14px;padding:10px 12px;position:relative}
+  .list{padding:12px;display:flex;flex-direction:column;gap:10px;height:calc(100% - 50px);overflow:auto;background:linear-gradient(135deg,#ffffff,#f7fbff)}
+  .contact{display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.86);border-radius:14px;padding:10px 12px;position:relative;border:1px solid #0000000f}
   .avatar{width:42px;height:42px;border-radius:999px;display:grid;place-items:center;color:#fff;font-weight:800}
   .i-maja{background:var(--pink)} .i-riven{background:var(--blue)} .i-noah{background:var(--green)} .i-victor{background:var(--vio)}
   .name{font-weight:800}.last{font-size:12px;color:var(--muted)}
-  .pushnote{position:absolute;left:16px;right:16px;bottom:16px;padding:10px 12px;border-radius:14px;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.16);display:flex;gap:10px;align-items:center}
 
   /* CHAT */
-  .chat{height:calc(100% - 50px);display:flex;flex-direction:column}
+  .chat{height:calc(100% - 50px);display:flex;flex-direction:column;background:linear-gradient(180deg,#f9fbff,#fefefe)}
   .thread{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
   .rowmsg{display:flex;gap:8px;align-items:flex-end}
   .bubble{max-width:74%;padding:9px 11px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.08);border:1px solid #00000010;background:#fff}
@@ -83,13 +92,17 @@
   .choices{display:grid;gap:8px}
   .choice{padding:10px 12px;border-radius:14px;background:linear-gradient(135deg,#fff,#f5f7ff);border:1px solid #e5e7eb;text-align:left}
   .next{width:100%}
+
+  /* PUSH NOTE (home) */
+  .pushnote{position:absolute;left:16px;right:16px;bottom:16px;padding:10px 12px;border-radius:14px;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.16);display:flex;gap:10px;align-items:center}
 </style>
 </head>
 <body>
 <div class="phone" id="app">
   <div class="status"><div id="t">--:--</div><div>Heartline</div><div>🔋92%</div></div>
   <div class="screen">
-    <!-- START -->
+
+    <!-- ===== GAME START ===== -->
     <div class="wrap start" id="scrStart">
       <div class="logo">Heartline</div>
       <div class="card">
@@ -104,7 +117,7 @@
       </div>
     </div>
 
-    <!-- NAME MODAL -->
+    <!-- ===== NAME MODAL ===== -->
     <div class="modal hidden" id="nameModal">
       <div class="dialog">
         <h3>Enter your name</h3>
@@ -113,18 +126,34 @@
       </div>
     </div>
 
-    <!-- HOME (PHONE) -->
-    <div class="wrap pad home hidden" id="scrHome">
+    <!-- ===== PHONE LOCK SCREEN ===== -->
+    <div class="wrap hidden" id="scrLock">
+      <div class="wall"></div>
+      <div class="lock">
+        <div class="lockClock">
+          <div class="clockTime" id="clockTime">--:--</div>
+          <div class="clockDate" id="clockDate">—</div>
+        </div>
+        <div class="dock">
+          <button class="dockBtn" id="dockPhone" title="Phone">📞</button>
+          <button class="dockBtn" id="dockMessages" title="Messages"><span>💬</span><span class="badge hidden" id="badgeDock">1</span></button>
+          <button class="dockBtn" id="dockApps" title="Apps">◻️</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== APPS GRID (DRAWER) ===== -->
+    <div class="wrap hidden home" id="scrHome">
       <div class="title" id="hello"></div>
       <div class="grid" id="apps"></div>
-      <div class="hint">A new message will arrive shortly…</div>
+      <div class="hint">Tap Messages to open chats</div>
       <div class="pushnote hidden" id="push">
         <div class="avatar i-maja" style="width:30px;height:30px">M</div>
         <div><div style="font-weight:700">New message</div><div class="last">from Maya 💬</div></div>
       </div>
     </div>
 
-    <!-- MESSAGES LIST -->
+    <!-- ===== MESSAGES LIST ===== -->
     <div class="wrap hidden" id="scrList">
       <div class="topbar">
         <button class="link" id="backHome">◀ Back</button>
@@ -134,7 +163,7 @@
       <div class="list" id="list"></div>
     </div>
 
-    <!-- CHAT -->
+    <!-- ===== CHAT ===== -->
     <div class="wrap hidden" id="scrChat">
       <div class="topbar">
         <button class="link" id="backList">◀ Back</button>
@@ -147,266 +176,234 @@
         <div class="bar hidden" id="barChoices"><div class="choices" id="choices"></div></div>
       </div>
     </div>
+
   </div>
 </div>
 
 <script>
-/* --------- tiny utils --------- */
-const $ = sel => document.querySelector(sel);
-const el = (tag, cls, txt) => {const n=document.createElement(tag); if(cls) n.className=cls; if(txt) n.textContent=txt; return n;};
-const show = id => {["#scrStart","#scrHome","#scrList","#scrChat"].forEach(s=>$(s).classList.add('hidden')); $(id).classList.remove('hidden');};
-const nowTime = ()=>{const d=new Date(); return d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});}
-setInterval(()=>$("#t").textContent=nowTime(),1000);
+/* ====== tiny utils ====== */
+const $ = s => document.querySelector(s);
+const el = (t,c,txt)=>{const n=document.createElement(t); if(c) n.className=c; if(txt!==undefined) n.textContent=txt; return n;};
+const show = id => ["#scrStart","#scrLock","#scrHome","#scrList","#scrChat"].forEach(s=>$(s).classList.toggle('hidden', s!==id));
+const setTime=()=>{
+  const d=new Date();
+  $("#t").textContent = d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  $("#clockTime").textContent = d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  $("#clockDate").textContent = d.toLocaleDateString([], {weekday:'short', day:'numeric', month:'short'});
+};
+setInterval(setTime, 1000); setTime();
 
-/* --------- STATE --------- */
-const ST = {
-  name: null,
-  unlocked: { maya:true, riven:false },
-  badges: { maya:0, riven:0 },
-  threads: {
-    maya: { msgs:[], queue:[], stage:'idle', finished:false },
-    riven:{ msgs:[], queue:[], stage:'idle', finished:false },
+/* ====== state ====== */
+const ST={
+  name:null,
+  unlocked:{ maya:true, riven:false },
+  badges:{ maya:0, riven:0 },
+  threads:{
+    maya:{ msgs:[], queue:[], stage:'idle', finished:false },
+    riven:{ msgs:[], queue:[], stage:'idle', finished:false }
   }
 };
+function save(){ localStorage.setItem('HL_SAVE', JSON.stringify(ST)); }
+function load(){ try{Object.assign(ST, JSON.parse(localStorage.getItem('HL_SAVE')||"{}"));}catch(e){} }
+load();
 
-/* --------- SCRIPTS (prosto) --------- */
-const Script = {
+/* ====== scripts ====== */
+const Script={
   maya:{
-    start:{ from:'Maya', text:'Hey! Guess who texted me just now? 👀' },
+    start:{from:'Maya', text:'Hey! Guess who texted me just now? 👀'},
     choices:[
-      {id:'m1', text:"Tell me already!"},
-      {id:'m2', text:"Let me guess… Riven?"},
-      {id:'m3', text:"You’re glowing, Maya 😉"}
+      {id:'m1', text:'Tell me already!'},
+      {id:'m2', text:'Let me guess… Riven?'},
+      {id:'m3', text:'You’re glowing, Maya 😉'}
     ],
     replies:{
-      m1:[{from:'Maya',text:'Riven. He texted ME instead of you.'},
-          {from:'Maya',text:"What is he even doing? 😤"}],
-      m2:[{from:'Maya',text:'…Yeah. Sorry 😅'},
-          {from:'Maya',text:"He asked if you’re still mad."}],
+      m1:[{from:'Maya',text:'Riven. He texted ME instead of you.'},{from:'Maya',text:'What is he even doing? 😤'}],
+      m2:[{from:'Maya',text:'…Yeah. Sorry 😅'},{from:'Maya',text:"He asked if you’re still mad."}],
       m3:[{from:'Maya',text:'Haha stop 🙈 But yes… Riven.'}]
     },
     onFinish(){
-      ST.unlocked.riven=true;
-      ST.badges.riven=(ST.badges.riven||0)+1;
+      ST.unlocked.riven=true; ST.badges.riven=(ST.badges.riven||0)+1; save();
       notifyHome('riven');
     }
   },
   riven:{
-    start:{ from:'Riven', text:'You still awake?' },
+    start:{from:'Riven', text:'You still awake?'},
     choices:[
       {id:'r1', text:"Didn’t expect to hear from you."},
       {id:'r2', text:"I don’t sleep much lately."},
       {id:'r3', text:"(Don’t reply)"}
     ],
     replies:{
-      r1:[{from:'Riven',text:"Me neither. Guess we’re bad at letting go."},
-          {from:'Riven',text:'Maya said you’re still in town.'}],
+      r1:[{from:'Riven',text:"Me neither. Guess we’re bad at letting go."},{from:'Riven',text:'Maya said you’re still in town.'}],
       r2:[{from:'Riven',text:'Figures. You used to text me at 2AM just to send memes.'}],
       r3:[{from:'Riven',text:'…Yeah. I probably deserve the silence.'}]
     },
-    follow:[
-      {from:'Riven',text:'Do you ever think about… that night?'}
-    ],
+    follow:[{from:'Riven',text:'Do you ever think about… that night?'}],
     onFinish(){
-      // ping back to Maya / allow reply
-      ST.badges.maya=(ST.badges.maya||0)+1;
+      ST.badges.maya=(ST.badges.maya||0)+1; save();
       notifyHome('maya',"Maya: “Call me later?”");
     }
   }
 };
 
-/* --------- START / RESET --------- */
-$("#btnStart").onclick = ()=> { $("#nameModal").classList.remove('hidden'); $("#nameInput").focus(); };
-$("#btnReset").onclick = ()=> { localStorage.removeItem('HL_SAVE'); location.reload(); };
-$("#btnOk").onclick = ()=>{
-  const v = $("#nameInput").value.trim() || "You";
-  ST.name = v; save();
-  $("#hello").textContent = `Welcome, ${v}!`;
-  $("#nameModal").classList.add('hidden');
-  show("#scrHome");
-  armHome();
-};
-function save(){ localStorage.setItem('HL_SAVE', JSON.stringify(ST)); }
-function load(){
-  const raw=localStorage.getItem('HL_SAVE');
-  if(!raw) return;
-  try{
-    const s = JSON.parse(raw);
-    Object.assign(ST, s);
-  }catch(e){}
-}
-load();
-if(ST.name){ $("#hello").textContent=`Welcome, ${ST.name}!`; show("#scrHome"); armHome(true); }
+/* ====== start & name ====== */
+const posterUrl = "assets/start-cover.jpg"; // TODO: podmień wg swoich plików
+document.documentElement.style.setProperty('--poster', `url("${posterUrl}")`);
+document.documentElement.style.setProperty('--wallpaper', `url("assets/sakura-closeup.jpg")`); // TODO: podmień
 
-/* --------- HOME (apps + auto notify) --------- */
-function appIcon(emoji, label, onClick, badge=0){
-  const wrap = el('div','app');
-  const ico = el('div','appIcon',emoji);
-  wrap.appendChild(ico);
-  wrap.appendChild(el('div',null,label));
-  if(badge>0){ const b=el('div','badge',badge); wrap.style.position='relative'; wrap.appendChild(b); }
-  if(onClick) wrap.onclick=onClick;
-  return wrap;
+$("#btnStart").onclick=()=>{$("#nameModal").classList.remove('hidden'); $("#nameInput").focus();};
+$("#btnReset").onclick=()=>{localStorage.removeItem('HL_SAVE'); location.reload();};
+$("#btnOk").onclick=()=>{
+  const v=$("#nameInput").value.trim()||"You";
+  ST.name=v; save();
+  $("#hello").textContent=`Welcome, ${v}!`;
+  $("#nameModal").classList.add('hidden');
+  show("#scrLock");
+  armLock(); // zbroimy dock + auto powiadomienie
+};
+if(ST.name){
+  $("#hello").textContent=`Welcome, ${ST.name}!`;
+  show("#scrLock");
+  armLock(true);
 }
-function armHome(skipNotify=false){
-  const g = $("#apps"); g.innerHTML="";
-  g.append(
-    appIcon("💬","Messages", ()=>{ show("#scrList"); renderList(); }, (ST.badges.maya||0)+(ST.badges.riven||0)),
-    appIcon("📞","Phone"),
-    appIcon("🖼️","Gallery"),
-    appIcon("⏰","Clock"),
-    appIcon("📝","Notes"),
-    appIcon("⚙️","Settings"),
-    appIcon("🎵","Music"),
-    appIcon("📅","Calendar"),
-    appIcon("✉️","Mail"),
-  );
-  if(!skipNotify){
-    setTimeout(()=>{ ST.badges.maya=(ST.badges.maya||0)+1; save(); notifyHome('maya'); },1500);
+
+/* ====== LOCK SCREEN behaviour ====== */
+function armLock(skipNotify=false){
+  // pokaż badge w docku
+  updateDockBadge();
+  // handlery
+  $("#dockApps").onclick = ()=>{ show("#scrHome"); armHome(true); };
+  $("#dockMessages").onclick = ()=>{ show("#scrList"); renderList(); };
+  $("#dockPhone").onclick = ()=> alert("Phone app is not implemented in the demo.");
+  // pierwsza notyfikacja: Maya po 1.5 s
+  if(!skipNotify && ST.threads.maya.msgs.length===0 && ST.badges.maya===0){
+    setTimeout(()=>{ ST.badges.maya=(ST.badges.maya||0)+1; save(); updateDockBadge(); },1500);
   }
 }
-function notifyHome(who, previewText){
-  const n=$("#push");
-  const isM = who==='maya';
-  n.querySelector('.avatar').className = 'avatar ' + (isM?'i-maja':'i-riven');
-  n.querySelector('.last').textContent = previewText || (isM?'from Maya 💬':'from Riven 💬');
-  n.classList.remove('hidden');
-  setTimeout(()=>n.classList.add('hidden'), 2200);
-  save();
+function updateDockBadge(){
+  const cnt=(ST.badges.maya||0)+(ST.badges.riven||0);
+  $("#badgeDock").textContent=cnt;
+  $("#badgeDock").classList.toggle('hidden', cnt===0);
 }
 
-/* --------- MESSAGES LIST --------- */
-$("#backHome").onclick = ()=>{ show("#scrHome"); armHome(true); };
-
+/* ====== HOME (APPS GRID) ====== */
+function appIcon(emoji,label,onClick,badge=0){
+  const wrap=el('div','app');
+  const ico=el('div','appIcon',emoji);
+  wrap.append(ico,el('div',null,label));
+  if(badge>0){ const b=el('div','badge',badge); ico.appendChild(b); }
+  wrap.onclick=onClick; return wrap;
+}
+function armHome(skipNotify){
+  const g=$("#apps"); g.innerHTML="";
+  const total=(ST.badges.maya||0)+(ST.badges.riven||0);
+  g.append(
+    appIcon("💬","Messages", ()=>{ show("#scrList"); renderList(); }, total),
+    appIcon("📞","Phone", ()=> alert("Phone app is not implemented in the demo.") ),
+    appIcon("🖼️","Gallery", ()=> alert("Gallery is not implemented in the demo.") ),
+    appIcon("⏰","Clock", ()=> alert("Clock is not implemented in the demo.") ),
+    appIcon("📝","Notes", ()=> alert("Notes are not implemented in the demo.") ),
+    appIcon("⚙️","Settings", ()=> alert("Settings are not implemented in the demo.") )
+  );
+  // push toast (estetyka)
+  const p=$("#push"); p.classList.add('hidden');
+  if(!skipNotify && ST.badges.maya>0){
+    p.querySelector('.last').textContent="from Maya 💬";
+    p.classList.remove('hidden'); setTimeout(()=>p.classList.add('hidden'),2200);
+  }
+}
+$("#backHome").onclick=()=>{ show("#scrHome"); armHome(true); };
+/* ====== messages list ====== */
 function renderList(){
   const L=$("#list"); L.innerHTML="";
   const contacts=[
-    {id:'maya',  name:'Maya',   cls:'i-maja',  initial:'M'},
-    {id:'riven', name:'Riven',  cls:'i-riven', initial:'R'},
-    // przyszli chłopcy: {id:'noah',...}, {id:'victor',...}
+    {id:'maya', name:'Maya', cls:'i-maja', initial:'M'},
+    {id:'riven',name:'Riven',cls:'i-riven',initial:'R'}
   ];
   contacts.forEach(c=>{
-    if(!ST.unlocked[c.id]) return; // ukryj zablokowane
-    const row = el('button','contact');
-    const av = el('div','avatar '+c.cls,c.initial);
-    const box = el('div');
-    const nm  = el('div','name',c.name);
-    const last= lastPreview(c.id);
-    box.append(nm, el('div','last', last || (c.id==='maya'?'“Hey! Guess who texted me…?”':'“You still awake?”')));
-    row.append(av,box);
-    if(ST.badges[c.id]>0){ const b=el('div','badge', ST.badges[c.id]); b.style.position='absolute'; b.style.right='8px'; b.style.top='8px'; row.appendChild(b); }
-    row.onclick = ()=> openChat(c.id,c.name,c.cls);
-    L.appendChild(row);
+    if(!ST.unlocked[c.id]) return;
+    const row=el('button','contact');
+    row.append(el('div','avatar '+c.cls,c.initial));
+    const box=el('div'); box.append(el('div','name',c.name), el('div','last', lastPreview(c.id) || (c.id==='maya'?'“Hey! Guess who texted me…?”':'“You still awake?”')));
+    row.append(box);
+    const unread=ST.badges[c.id]||0;
+    if(unread>0){ const b=el('div','badge',unread); b.style.position='absolute'; b.style.right='8px'; b.style.top='8px'; row.append(b); }
+    row.onclick=()=>openChat(c.id,c.name,c.cls);
+    L.append(row);
   });
 }
-function lastPreview(id){ const th=ST.threads[id]; const m=th.msgs; if(!m.length) return ""; return m[m.length-1].text; }
+function lastPreview(id){ const th=ST.threads[id]; const m=th?.msgs||[]; return m.length? m[m.length-1].text : ""; }
 
-/* --------- CHAT --------- */
-$("#backList").onclick = ()=>{ show("#scrList"); renderList(); };
-$("#btnNext").onclick = ()=> stepNext();
+/* ====== chat ====== */
+$("#backList").onclick=()=>{ show("#scrList"); renderList(); updateDockBadge(); };
+$("#btnNext").onclick=()=>stepNext();
 
-let CUR = { id:null, title:"", cls:"" };
-
+let CUR={id:null,title:"",cls:""};
 function openChat(id,title,cls){
   CUR={id,title,cls};
   $("#chatTitle").textContent=title;
-  $("#chatAvatar").className = "avatar "+cls;
+  $("#chatAvatar").className="avatar "+cls;
   show("#scrChat");
-  // clear unread
-  ST.badges[id]=0; save();
+  ST.badges[id]=0; save(); updateDockBadge();
 
-  // ensure start
-  const T = ST.threads[id];
+  const T=ST.threads[id];
   if(T.msgs.length===0 && T.queue.length===0 && !T.finished){
-    const s = Script[id].start;
-    T.queue.push({from:s.from,text:s.text,me:false});
-    T.stage='start';
+    const s=Script[id].start; T.queue.push({from:s.from,text:s.text,me:false}); T.stage='start';
   }
-  renderThread();
-  updateBars();
+  renderThread(); updateBars();
 }
-
-/* render + bars */
 function renderThread(){
   const box=$("#thread"); box.innerHTML="";
   const T=ST.threads[CUR.id];
   T.msgs.forEach(m=>{
     const row=el('div','rowmsg');
-    if(!m.me){ row.appendChild(el('div','avatar '+ (CUR.cls||'i-maja'), (m.from||'?')[0])); }
+    if(!m.me){ row.append(el('div','avatar '+(CUR.cls||'i-maja'), (m.from||'?')[0])); }
     const b=el('div','bubble '+(m.me?'fromMe':'fromThem'));
     b.innerHTML = m.me ? m.text : `<strong>${m.from}</strong><br>${m.text}`;
-    m.me? row.appendChild(b) : (row.append(b));
-    if(m.me){ row.classList.add('righted'); }
-    $("#thread").appendChild(row);
+    row.append(b); if(m.me) row.style.justifyContent='flex-end';
+    box.append(row);
   });
-  box.scrollTop = box.scrollHeight;
+  box.scrollTop=box.scrollHeight;
 }
 function updateBars(){
   const T=ST.threads[CUR.id];
-  const haveQueue = T.queue.length>0;
-  const haveChoices = (T.choices||[]).length>0;
-  $("#barNext").classList.toggle('hidden', !haveQueue);
-  $("#barChoices").classList.toggle('hidden', !haveChoices);
-  if(haveChoices){
-    const wrap=$("#choices"); wrap.innerHTML="";
-    T.choices.forEach(ch=>{
-      const btn=el('button','choice',ch.text);
-      btn.onclick = ()=> choose(ch.id);
-      wrap.appendChild(btn);
-    });
+  const haveQ=T.queue.length>0, haveC=(T.choices||[]).length>0;
+  $("#barNext").classList.toggle('hidden', !haveQ);
+  $("#barChoices").classList.toggle('hidden', !haveC);
+  if(haveC){
+    const w=$("#choices"); w.innerHTML="";
+    T.choices.forEach(ch=>{ const b=el('button','choice',ch.text); b.onclick=()=>choose(ch.id); w.append(b); });
   }
 }
-
-/* advancing */
 function stepNext(){
-  const T=ST.threads[CUR.id];
-  if(!T.queue.length) return;
-  const msg = T.queue.shift();
-  T.msgs.push(msg);
-  // when first burst finished → show choices
+  const T=ST.threads[CUR.id]; if(!T.queue.length) return;
+  const msg=T.queue.shift(); T.msgs.push(msg);
   if(T.queue.length===0 && T.stage==='start' && Script[CUR.id].choices){
-    T.choices = [...Script[CUR.id].choices];
-    T.stage='await';
+    T.choices=[...Script[CUR.id].choices]; T.stage='await';
   }
-  // special: riven follow line
   if(T.queue.length===0 && T.stage==='afterChoices' && Script[CUR.id].follow){
-    T.queue.push(...Script[CUR.id].follow);
-    T.stage='followShown';
+    T.queue.push(...Script[CUR.id].follow); T.stage='followShown';
   }
   save(); renderThread(); updateBars();
-
-  // auto-finish hook
   if(T.queue.length===0 && !T.choices?.length && (T.stage==='followShown' || T.stage==='afterChoicesDone')){
     T.finished=true; save();
-    if(Script[CUR.id].onFinish) Script[CUR.id].onFinish();
+    Script[CUR.id].onFinish && Script[CUR.id].onFinish();
   }
 }
-
 function choose(choiceId){
-  const T=ST.threads[CUR.id];
-  const sc=Script[CUR.id];
-  // append our choice bubble
-  const txt = (sc.choices.find(c=>c.id===choiceId)||{}).text || "...";
+  const T=ST.threads[CUR.id], sc=Script[CUR.id];
+  const txt=(sc.choices.find(c=>c.id===choiceId)||{}).text||"...";
   T.msgs.push({from:'You',text:txt,me:true});
-  // schedule replies
-  const bundle = (sc.replies[choiceId]||[]);
-  T.queue.push(...bundle);
-  T.choices = [];
-  T.stage = (CUR.id==='riven') ? 'afterChoices' : 'afterChoicesDone';
+  const bundle=(sc.replies[choiceId]||[]); T.queue.push(...bundle);
+  T.choices=[]; T.stage=(CUR.id==='riven')?'afterChoices':'afterChoicesDone';
   save(); renderThread(); updateBars();
-
-  // for Maya: zakończenie od razu po wypisaniu queue
-  // (obsłuży stepNext, gdy dojdzie do końca)
 }
 
-/* --------- FIRST LOAD FLOW --------- */
-if(!ST.name){
-  show("#scrStart");
-}else{
-  show("#scrHome");
-}
+/* ====== initial route ====== */
+if(!ST.name){ show("#scrStart"); }
+else { show("#scrLock"); }
 
-/* --------- ACCESSIBILITY: enter on modal --------- */
+/* accessibility */
 $("#nameInput").addEventListener('keydown', e=>{ if(e.key==='Enter') $("#btnOk").click(); });
 </script>
 </body>
