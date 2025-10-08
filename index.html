@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Heartline — Demo Fixed</title>
+<style>
+  :root{
+    --bg1:#ffeef7; --bg2:#e6f0ff; --ink:#111827; --muted:#6b7280;
+    --glass:rgba(255,255,255,.65); --shadow:0 10px 30px rgba(0,0,0,.25);
+    --blue:#60a5fa; --vio:#8b5cf6; --green:#34d399; --pink:#f472b6;
+  }
+  *{box-sizing:border-box} html,body,#root{height:100%;margin:0}
+  body{background:#0f172a;overflow:hidden;font-family:Inter,ui-sans-serif,-apple-system,Segoe UI,Roboto;color:var(--ink)}
+  .stage{height:100%;display:flex;align-items:center;justify-content:center}
+  .phone{width:min(360px,calc(100vw - 16px));height:min(780px,calc(100vh - 16px));
+    border-radius:28px;background:#000;border:4px solid #0b0f1a;
+    box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+  .appbar{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#0b1220;color:#fff}
+  .appbar b{font-weight:700}
+  .btn-top{background:#182034;border:0;color:#e5e7eb;border-radius:10px;padding:6px 10px;font-size:12px;cursor:pointer}
+  .screen{position:relative;flex:1;overflow:hidden;background:linear-gradient(135deg,var(--bg1),var(--bg2))}
+  .screen::before{content:"";position:absolute;inset:0;opacity:.22;background-image:url('data:image/svg+xml;utf8,\
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="700">\
+<defs><radialGradient id="g" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#ffffff00"/></radialGradient></defs>\
+<g opacity="0.95">\
+<circle cx="120" cy="120" r="54" fill="%23f8b4d9"/><circle cx="120" cy="120" r="28" fill="url(%23g)"/>\
+<circle cx="560" cy="140" r="46" fill="%23c4b5fd"/><circle cx="560" cy="140" r="24" fill="url(%23g)"/>\
+<circle cx="210" cy="320" r="42" fill="%23a7f3d0"/><circle cx="210" cy="320" r="22" fill="url(%23g)"/>\
+<circle cx="430" cy="380" r="58" fill="%23fde68a"/><circle cx="430" cy="380" r="30" fill="url(%23g)"/>\
+<circle cx="300" cy="560" r="44" fill="%23fbcfe8"/><circle cx="300" cy="560" r="22" fill="url(%23g)"/>\
+</g></svg>');background-size:280px 280px;background-repeat:repeat}
+  .start-wrap{height:100%;display:grid;place-items:center;padding:18px}
+  .card{background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border-radius:22px;box-shadow:var(--shadow);padding:22px;text-align:center;width:min(320px,90%)}
+  .title{font-size:28px;font-weight:800;letter-spacing:.5px;margin-bottom:10px}
+  .btn-primary{background:linear-gradient(135deg,#fb7185,#f472b6);color:#fff;border:0;border-radius:14px;padding:12px 16px;font-weight:700;cursor:pointer;width:100%;margin-top:10px}
+  .btn-ghost{background:transparent;border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:10px 12px;cursor:pointer;width:100%;margin-top:8px}
+  .name-box input{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(0,0,0,.12);font-size:16px}
+  .home{position:relative;z-index:1;padding:18px;height:100%;display:flex;flex-direction:column}
+  .welcome{margin:4px 0 12px 4px;color:#1f2937;font-weight:700}
+  .grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start;justify-items:center}
+  .app{position:relative;display:flex;flex-direction:column;align-items:center}
+  .app-icon{width:68px;height:68px;border-radius:999px;background:var(--glass);backdrop-filter:blur(6px);display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.12);font-size:26px}
+  .app-name{margin-top:6px;font-size:12px;font-weight:600;color:#1f2937}
+  .badge{position:absolute;right:-6px;top:-6px;background:#ef4444;color:#fff;border-radius:999px;min-width:18px;height:18px;display:grid;place-items:center;font-size:11px;padding:0 6px;border:2px solid #fff}
+  .home-hint{text-align:center;font-size:12px;color:#374151}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+const {useState,useEffect}=React;
+
+function App(){
+  const [screen,setScreen]=useState('start');
+  const [name,setName]=useState('');
+
+  return(
+    <div className="stage">
+      <div className="phone">
+        <div className="appbar"><button className="btn-top" onClick={()=>setScreen('start')}>Reset</button><b>Heartline</b><div style={{width:'60px'}}/></div>
+        {screen==='start'&&(
+          <div className="screen">
+            <div className="start-wrap">
+              <div className="card">
+                <div className="title">Heartline</div>
+                <div style={{fontSize:13,color:'#374151',marginBottom:10}}>Romance Messenger • Demo</div>
+                <button className="btn-primary" onClick={()=>setScreen('name')}>Start</button>
+              </div>
+            </div>
+          </div>
+        )}
+        {screen==='name'&&(
+          <div className="screen">
+            <div className="start-wrap">
+              <div className="card name-box">
+                <div className="title" style={{fontSize:22}}>Welcome!</div>
+                <div style={{fontSize:13,color:'#374151',margin:'8px 0 10px'}}>Enter your name:</div>
+                <input placeholder="Your name" value={name} onChange={e=>setName(e.target.value)}/>
+                <button className="btn-primary" onClick={()=>setScreen('home')}>OK</button>
+              </div>
+            </div>
+          </div>
+        )}
+        {screen==='home'&&(
+          <div className="screen">
+            <div className="home">
+              <div className="welcome">Welcome, {name||'Player'} 💖</div>
+              <div className="grid">
+                {['💬','📞','🖼️','⏰','⚙️','📝','🎵','📅','✉️'].map((i,n)=>(
+                  <div className="app" key={n}>
+                    <div className="app-icon">{i}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="home-hint">Tap “Messages” to open chats</div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App/>);
+</script>
+</body>
+</html>
